@@ -141,6 +141,15 @@ function RotatingK() {
       onPointerOver={() => !isDragging && (gl.domElement.style.cursor = 'grab')}
       onPointerOut={() => !isDragging && (gl.domElement.style.cursor = 'default')}
     >
+      {/* Yellow ring accent - positioned first so it's behind the K */}
+      <mesh position={[0, 0, -0.3]} rotation={[0, 0, 0]}>
+        <torusGeometry args={[2.2, 0.25, 16, 100]} />
+        <meshStandardMaterial
+          color="#FFD700"
+          metalness={0.6}
+          roughness={0.2}
+        />
+      </mesh>
       <Center>
         <Text3D
           font="/kierio04.channel/fonts/helvetiker_bold.typeface.json"
@@ -148,16 +157,16 @@ function RotatingK() {
           height={0.5}
           curveSegments={12}
           bevelEnabled
-          bevelThickness={0.1}
-          bevelSize={0.05}
+          bevelThickness={0.15}
+          bevelSize={0.08}
           bevelOffset={0}
           bevelSegments={5}
         >
           K
           <meshStandardMaterial
-            color="#4a90e2"
-            metalness={0.6}
-            roughness={0.2}
+            color="#000000"
+            metalness={0.3}
+            roughness={0.4}
           />
         </Text3D>
       </Center>
@@ -181,9 +190,10 @@ function App() {
         camera={{ position: [0, 0, 10], fov: 75 }}
         gl={{ antialias: true }}
       >
-        <ambientLight intensity={0.5} />
-        <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={1} />
-        <pointLight position={[-10, -10, -10]} intensity={0.5} />
+        <ambientLight intensity={0.8} />
+        <directionalLight position={[5, 5, 5]} intensity={1.2} />
+        <directionalLight position={[-5, -5, -5]} intensity={0.4} />
+        <pointLight position={[0, 0, 5]} intensity={0.6} color="#FFD700" />
         <Suspense fallback={<Loader />}>
           <RotatingK />
         </Suspense>
