@@ -69,7 +69,7 @@ This project is configured to deploy automatically to GitHub Pages via GitHub Ac
    - You can also manually trigger deployment from the Actions tab
 
 4. **Access Your Site**:
-   - Your site will be available at: `https://[username].github.io/kierio04.channel/`
+   - Your site will be available at: `https://kierio04.com`
    - Check the Actions tab to monitor deployment progress
 
 ### Manual Deployment (Alternative)
@@ -88,7 +88,7 @@ npx gh-pages -d dist
 ## Project Structure
 
 ```
-kierio04.channel/
+kierio04.com/
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml       # GitHub Actions workflow
