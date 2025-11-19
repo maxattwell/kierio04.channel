@@ -152,7 +152,7 @@ function RotatingK() {
       </mesh>
       <Center>
         <Text3D
-          font="/kierio04.channel/fonts/helvetiker_bold.typeface.json"
+          font="/fonts/helvetiker_bold.typeface.json"
           size={3}
           height={0.5}
           curveSegments={12}
