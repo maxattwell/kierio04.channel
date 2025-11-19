@@ -51,9 +51,41 @@ function CoinWithCutout() {
   return (
     <mesh geometry={geometry}>
       <meshStandardMaterial
-        color="#000000"
-        metalness={0.3}
-        roughness={0.4}
+        color="#3a3a3a"
+        metalness={0.9}
+        roughness={0.3}
+      />
+    </mesh>
+  )
+}
+
+function GoldRing() {
+  const geometry = useMemo(() => {
+    // Create outer cylinder
+    const outerCylinder = new THREE.CylinderGeometry(2.8, 2.8, 0.4, 64)
+    // Create inner cylinder to subtract - slightly taller to avoid CSG artifacts
+    const innerCylinder = new THREE.CylinderGeometry(2.5, 2.5, 0.45, 64)
+    
+    // Rotate both to match coin orientation
+    outerCylinder.rotateX(Math.PI / 2)
+    innerCylinder.rotateX(Math.PI / 2)
+    
+    // Perform CSG subtraction to create ring
+    const evaluator = new Evaluator()
+    const outerBrush = new Brush(outerCylinder)
+    const innerBrush = new Brush(innerCylinder)
+    
+    const result = evaluator.evaluate(outerBrush, innerBrush, SUBTRACTION)
+    
+    return result.geometry
+  }, [])
+  
+  return (
+    <mesh geometry={geometry}>
+      <meshStandardMaterial
+        color="#FFD700"
+        metalness={0.9}
+        roughness={0.3}
       />
     </mesh>
   )
@@ -198,6 +230,7 @@ function RotatingK() {
     >
       <Suspense fallback={<Loader />}>
         <CoinWithCutout />
+        <GoldRing />
       </Suspense>
     </group>
   )
