@@ -1,8 +1,63 @@
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Text3D, Center } from '@react-three/drei'
-import { useRef, useState, useEffect, Suspense } from 'react'
+import { Canvas, useFrame, useThree, useLoader } from '@react-three/fiber'
+import { Text3D, Center, useFont } from '@react-three/drei'
+import { useRef, useState, useEffect, Suspense, useMemo } from 'react'
 import * as THREE from 'three'
+import { SUBTRACTION, Brush, Evaluator } from 'three-bvh-csg'
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry'
 import './App.css'
+
+function CoinWithCutout() {
+  const font = useFont('/fonts/helvetiker_bold.typeface.json')
+  
+  const geometry = useMemo(() => {
+    if (!font) return null
+    
+    // Create cylinder (coin) - oriented along Z axis by default
+    const cylinderGeometry = new THREE.CylinderGeometry(2.5, 2.5, 0.4, 64)
+    
+    // Create K text geometry
+    const textGeometry = new TextGeometry('K', {
+      font: font,
+      size: 2.5,
+      height: 1.0, // Make it thick enough to go through the coin
+      curveSegments: 12,
+      bevelEnabled: true,
+      bevelThickness: 0.05,
+      bevelSize: 0.03,
+      bevelSegments: 5
+    })
+    
+    // Center the text geometry
+    textGeometry.computeBoundingBox()
+    const centerOffset = new THREE.Vector3()
+    textGeometry.boundingBox.getCenter(centerOffset)
+    textGeometry.translate(-centerOffset.x, -centerOffset.y, -centerOffset.z)
+    
+    // Rotate the cylinder to face the camera (not the K)
+    cylinderGeometry.rotateX(Math.PI / 2)
+    
+    // Perform CSG subtraction
+    const evaluator = new Evaluator()
+    const cylinderBrush = new Brush(cylinderGeometry)
+    const textBrush = new Brush(textGeometry)
+    
+    const result = evaluator.evaluate(cylinderBrush, textBrush, SUBTRACTION)
+    
+    return result.geometry
+  }, [font])
+  
+  if (!geometry) return null
+  
+  return (
+    <mesh geometry={geometry}>
+      <meshStandardMaterial
+        color="#000000"
+        metalness={0.3}
+        roughness={0.4}
+      />
+    </mesh>
+  )
+}
 
 function RotatingK() {
   const meshRef = useRef()
@@ -141,35 +196,9 @@ function RotatingK() {
       onPointerOver={() => !isDragging && (gl.domElement.style.cursor = 'grab')}
       onPointerOut={() => !isDragging && (gl.domElement.style.cursor = 'default')}
     >
-      {/* Yellow ring accent - positioned first so it's behind the K */}
-      <mesh position={[0, 0, -0.3]} rotation={[0, 0, 0]}>
-        <torusGeometry args={[2.2, 0.25, 16, 100]} />
-        <meshStandardMaterial
-          color="#FFD700"
-          metalness={0.6}
-          roughness={0.2}
-        />
-      </mesh>
-      <Center>
-        <Text3D
-          font="/fonts/helvetiker_bold.typeface.json"
-          size={3}
-          height={0.5}
-          curveSegments={12}
-          bevelEnabled
-          bevelThickness={0.15}
-          bevelSize={0.08}
-          bevelOffset={0}
-          bevelSegments={5}
-        >
-          K
-          <meshStandardMaterial
-            color="#000000"
-            metalness={0.3}
-            roughness={0.4}
-          />
-        </Text3D>
-      </Center>
+      <Suspense fallback={<Loader />}>
+        <CoinWithCutout />
+      </Suspense>
     </group>
   )
 }
@@ -188,12 +217,17 @@ function App() {
     <div style={{ width: '100vw', height: '100vh', margin: 0, padding: 0 }}>
       <Canvas
         camera={{ position: [0, 0, 10], fov: 75 }}
-        gl={{ antialias: true }}
+        gl={{ antialias: true, stencil: true }}
       >
-        <ambientLight intensity={0.8} />
-        <directionalLight position={[5, 5, 5]} intensity={1.2} />
-        <directionalLight position={[-5, -5, -5]} intensity={0.4} />
-        <pointLight position={[0, 0, 5]} intensity={0.6} color="#FFD700" />
+        <ambientLight intensity={2.0} />
+        <directionalLight position={[5, 5, 5]} intensity={3.0} />
+        <directionalLight position={[-5, -5, -5]} intensity={2.0} />
+        <directionalLight position={[0, 5, 0]} intensity={2.5} />
+        <directionalLight position={[0, -5, 0]} intensity={2.0} />
+        <pointLight position={[0, 0, 5]} intensity={3.0} color="#ffffff" />
+        <pointLight position={[0, 0, -5]} intensity={3.0} color="#ffffff" />
+        <pointLight position={[5, 0, 0]} intensity={2.0} color="#ffffff" />
+        <pointLight position={[-5, 0, 0]} intensity={2.0} color="#ffffff" />
         <Suspense fallback={<Loader />}>
           <RotatingK />
         </Suspense>
