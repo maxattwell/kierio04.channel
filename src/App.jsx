@@ -7,7 +7,8 @@ import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry'
 import './App.css'
 
 function CoinWithCutout() {
-  const font = useFont('/fonts/helvetiker_bold.typeface.json')
+    const font = useFont('/fonts/manrope_extrabold.typeface.json')
+
   
   const geometry = useMemo(() => {
     if (!font) return null
@@ -20,11 +21,11 @@ function CoinWithCutout() {
       font: font,
       size: 2.5,
       height: 1.0, // Make it thick enough to go through the coin
-      curveSegments: 12,
-      bevelEnabled: true,
-      bevelThickness: 0.05,
-      bevelSize: 0.03,
-      bevelSegments: 5
+      curveSegments: 9,
+      bevelEnabled: true, // Enable bevel to make strokes thicker
+      bevelThickness: 0.05, // Increase to make strokes thicker (was 0.05)
+      bevelSize: 0.15, // Increase to expand the outline (was 0.03)
+      bevelSegments: 8 // Keep low to reduce artifacts
     })
     
     // Center the text geometry
@@ -32,6 +33,9 @@ function CoinWithCutout() {
     const centerOffset = new THREE.Vector3()
     textGeometry.boundingBox.getCenter(centerOffset)
     textGeometry.translate(-centerOffset.x, -centerOffset.y, -centerOffset.z)
+    
+    // Scale horizontally to make the font appear flatter/wider (IKEA-like)
+      textGeometry.scale(1.6, 0.7, 1) // Increase X scale to widen, keep Y and Z at 1
     
     // Rotate the cylinder to face the camera (not the K)
     cylinderGeometry.rotateX(Math.PI / 2)
