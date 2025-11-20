@@ -265,6 +265,10 @@ function RotatingK({ onZoomComplete }) {
       onPointerOver={() => !isDragging && (gl.domElement.style.cursor = 'grab')}
       onPointerOut={() => !isDragging && (gl.domElement.style.cursor = 'default')}
     >
+      {/* Invisible larger sphere for easier clicking/dragging */}
+      <mesh visible={false}>
+        <sphereGeometry args={[4, 32, 32]} />
+      </mesh>
       <Suspense fallback={<Loader />}>
         <CoinWithCutout />
         <GoldRing />
