@@ -1,8 +1,17 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './Footer.css'
 
-function Footer() {
+function Footer({ show }) {
   const [isExpanded, setIsExpanded] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    if (show) {
+      // Small delay before starting animation
+      const timer = setTimeout(() => setIsVisible(true), 100)
+      return () => clearTimeout(timer)
+    }
+  }, [show])
 
   const socialLinks = [
     {
@@ -57,7 +66,7 @@ function Footer() {
   const secondaryLinks = socialLinks.filter(link => link.priority === 'secondary')
 
   return (
-    <footer className="mario-footer">
+    <footer className={`mario-footer ${isVisible ? 'visible' : ''}`}>
       <div className={`social-container ${isExpanded ? 'expanded' : 'collapsed'}`}>
         {/* Primary links - always visible on mobile */}
         <div className="primary-links">

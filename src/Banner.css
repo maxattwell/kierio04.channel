@@ -9,7 +9,13 @@
   z-index: 1000;
   pointer-events: none;
   opacity: 0;
-  animation: slideInBanner 0.8s ease-out 0.5s forwards;
+  transform: translateX(100px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.taskmaster-banner.visible {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 @keyframes slideInBanner {

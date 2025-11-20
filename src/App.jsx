@@ -97,7 +97,7 @@ function GoldRing() {
   )
 }
 
-function RotatingK() {
+function RotatingK({ onZoomComplete }) {
   const meshRef = useRef()
   const { camera, gl } = useThree()
   
@@ -108,14 +108,45 @@ function RotatingK() {
   const [currentRotation, setCurrentRotation] = useState({ x: 0, y: 0 })
   const autoRotationOffset = useRef(0)
   
+  // Zoom animation state
+  const [hasZoomed, setHasZoomed] = useState(false)
+  const zoomStartTime = useRef(null)
+  
   // Damping and auto-rotation constants
   const DAMPING = 0.95
   const AUTO_ROTATION_SPEED = 0.3
   const RESET_THRESHOLD = 0.01
   const RESET_SPEED = 0.05
+  const ZOOM_DURATION = 2.5 // seconds for the zoom-in animation
 
   useFrame((state, delta) => {
     if (meshRef.current) {
+      // Handle zoom-in animation
+      if (!hasZoomed) {
+        if (zoomStartTime.current === null) {
+          zoomStartTime.current = state.clock.elapsedTime
+        }
+        
+        const elapsed = state.clock.elapsedTime - zoomStartTime.current
+        
+        if (elapsed < ZOOM_DURATION) {
+          // Ease-out function for smooth deceleration
+          const t = elapsed / ZOOM_DURATION
+          const easeOut = 1 - Math.pow(1 - t, 3)
+          
+          // Start from very far away (z = -200) and zoom to z = 0
+          const startZ = -200
+          const endZ = 0
+          meshRef.current.position.z = startZ + (endZ - startZ) * easeOut
+        } else {
+          meshRef.current.position.z = 0
+          setHasZoomed(true)
+          if (onZoomComplete) {
+            onZoomComplete()
+          }
+        }
+      }
+      
       if (!isDragging) {
         // Apply damping to angular velocity
         setAngularVelocity(prev => ({
@@ -245,16 +276,24 @@ function RotatingK() {
 function Loader() {
   return (
     <mesh>
-      <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color="#4a90e2" wireframe />
+      <cylinderGeometry args={[2.5, 2.5, 0.4, 64]} />
+      <meshStandardMaterial 
+        color="#3a3a3a" 
+        metalness={0.9}
+        roughness={0.3}
+        opacity={0.3}
+        transparent={true}
+      />
     </mesh>
   )
 }
 
 function App() {
+  const [coinHasZoomed, setCoinHasZoomed] = useState(false)
+
   return (
     <>
-      <Banner />
+      <Banner show={coinHasZoomed} />
       <div style={{ width: '100vw', height: '100vh', margin: 0, padding: 0 }}>
         <Canvas
           camera={{ position: [0, 0, 10], fov: 75 }}
@@ -270,11 +309,11 @@ function App() {
           <pointLight position={[5, 0, 0]} intensity={2.0} color="#ffffff" />
           <pointLight position={[-5, 0, 0]} intensity={2.0} color="#ffffff" />
           <Suspense fallback={<Loader />}>
-            <RotatingK />
+            <RotatingK onZoomComplete={() => setCoinHasZoomed(true)} />
           </Suspense>
         </Canvas>
       </div>
-      <Footer />
+      <Footer show={coinHasZoomed} />
     </>
   )
 }
