@@ -1,0 +1,121 @@
+/* Taskmaster-themed banner in top right corner */
+.taskmaster-banner {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+  animation: slideInBanner 0.8s ease-out 0.5s forwards;
+}
+
+@keyframes slideInBanner {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.banner-content {
+  position: absolute;
+  top: 62px;
+  right: -105px;
+  width: 400px;
+  background: #c8102e;
+  transform: rotate(45deg);
+  transform-origin: center;
+  padding: 18px 0;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.5);
+  border-top: 3px solid #FFD700;
+  border-bottom: 3px solid #FFD700;
+}
+
+.banner-text {
+  display: block;
+  text-align: center;
+  font-family: 'Impact', 'Arial Black', 'Helvetica', sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 
+    2px 2px 0 #000000,
+    -1px -1px 0 #000000,
+    1px -1px 0 #000000,
+    -1px 1px 0 #000000,
+    0 0 8px rgba(255, 215, 0, 0.5);
+  line-height: 1;
+}
+
+/* Mobile adjustments - make it much bigger */
+@media (max-width: 768px) {
+  .taskmaster-banner {
+    width: 280px;
+    height: 280px;
+  }
+  
+  .banner-content {
+    top: 59px;
+    right: -95px;
+    width: 380px;
+    padding: 16px 0;
+    border-top: 3px solid #FFD700;
+    border-bottom: 3px solid #FFD700;
+  }
+  
+  .banner-text {
+    font-size: 26px;
+    letter-spacing: 2.5px;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .taskmaster-banner {
+    width: 290px;
+    height: 290px;
+  }
+  
+  .banner-content {
+    top: 61px;
+    right: -100px;
+    width: 390px;
+    padding: 17px 0;
+  }
+  
+  .banner-text {
+    font-size: 27px;
+    letter-spacing: 2.8px;
+  }
+}
+
+/* Large desktop adjustments */
+@media (min-width: 1200px) {
+  .taskmaster-banner {
+    width: 320px;
+    height: 320px;
+  }
+  
+  .banner-content {
+    top: 65px;
+    right: -105px;
+    width: 420px;
+    padding: 20px 0;
+  }
+  
+  .banner-text {
+    font-size: 30px;
+    letter-spacing: 3.5px;
+  }
+}

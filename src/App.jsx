@@ -6,6 +6,7 @@ import { SUBTRACTION, Brush, Evaluator } from 'three-bvh-csg'
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry'
 import './App.css'
 import Footer from './Footer'
+import Banner from './Banner'
 
 function CoinWithCutout() {
     const font = useFont('/fonts/manrope_extrabold.typeface.json')
@@ -253,6 +254,7 @@ function Loader() {
 function App() {
   return (
     <>
+      <Banner />
       <div style={{ width: '100vw', height: '100vh', margin: 0, padding: 0 }}>
         <Canvas
           camera={{ position: [0, 0, 10], fov: 75 }}
