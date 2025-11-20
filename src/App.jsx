@@ -5,6 +5,7 @@ import * as THREE from 'three'
 import { SUBTRACTION, Brush, Evaluator } from 'three-bvh-csg'
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry'
 import './App.css'
+import Footer from './Footer'
 
 function CoinWithCutout() {
     const font = useFont('/fonts/manrope_extrabold.typeface.json')
@@ -251,25 +252,28 @@ function Loader() {
 
 function App() {
   return (
-    <div style={{ width: '100vw', height: '100vh', margin: 0, padding: 0 }}>
-      <Canvas
-        camera={{ position: [0, 0, 10], fov: 75 }}
-        gl={{ antialias: true, stencil: true }}
-      >
-        <ambientLight intensity={2.0} />
-        <directionalLight position={[5, 5, 5]} intensity={3.0} />
-        <directionalLight position={[-5, -5, -5]} intensity={2.0} />
-        <directionalLight position={[0, 5, 0]} intensity={2.5} />
-        <directionalLight position={[0, -5, 0]} intensity={2.0} />
-        <pointLight position={[0, 0, 5]} intensity={3.0} color="#ffffff" />
-        <pointLight position={[0, 0, -5]} intensity={3.0} color="#ffffff" />
-        <pointLight position={[5, 0, 0]} intensity={2.0} color="#ffffff" />
-        <pointLight position={[-5, 0, 0]} intensity={2.0} color="#ffffff" />
-        <Suspense fallback={<Loader />}>
-          <RotatingK />
-        </Suspense>
-      </Canvas>
-    </div>
+    <>
+      <div style={{ width: '100vw', height: '100vh', margin: 0, padding: 0 }}>
+        <Canvas
+          camera={{ position: [0, 0, 10], fov: 75 }}
+          gl={{ antialias: true, stencil: true }}
+        >
+          <ambientLight intensity={2.0} />
+          <directionalLight position={[5, 5, 5]} intensity={3.0} />
+          <directionalLight position={[-5, -5, -5]} intensity={2.0} />
+          <directionalLight position={[0, 5, 0]} intensity={2.5} />
+          <directionalLight position={[0, -5, 0]} intensity={2.0} />
+          <pointLight position={[0, 0, 5]} intensity={3.0} color="#ffffff" />
+          <pointLight position={[0, 0, -5]} intensity={3.0} color="#ffffff" />
+          <pointLight position={[5, 0, 0]} intensity={2.0} color="#ffffff" />
+          <pointLight position={[-5, 0, 0]} intensity={2.0} color="#ffffff" />
+          <Suspense fallback={<Loader />}>
+            <RotatingK />
+          </Suspense>
+        </Canvas>
+      </div>
+      <Footer />
+    </>
   )
 }
 

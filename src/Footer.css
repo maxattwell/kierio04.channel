@@ -1,0 +1,374 @@
+.mario-footer {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  animation: slideUp 0.5s ease-out;
+}
+
+.social-container {
+  position: relative;
+}
+
+/* Mobile-first: Show primary links + more button */
+.primary-links {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background-image: url('/bg-pattern.png');
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  background-position: center;
+  padding: 10px 16px;
+  border-radius: 50px;
+  border: 3px solid #FFD700;
+  box-shadow: 
+    0 6px 12px rgba(0, 0, 0, 0.4),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2);
+}
+
+/* Desktop links - hidden on mobile */
+.desktop-links {
+  display: none;
+}
+
+/* Icon-only button style for mobile */
+.social-link.icon-only {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ffffff, #e8e8e8);
+  border: 2px solid #FFD700;
+  color: #333;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+    inset 0 2px 4px rgba(255, 255, 255, 0.6);
+  position: relative;
+}
+
+.social-link.icon-only::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 40%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), transparent);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.social-link.icon-only:active {
+  transform: scale(0.95);
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* More button */
+.more-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ffffff, #e8e8e8);
+  border: 2px solid #FFD700;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+    inset 0 2px 4px rgba(255, 255, 255, 0.6);
+  position: relative;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  overflow: hidden;
+}
+
+.more-button::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 40%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), transparent);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.more-button:active {
+  transform: scale(0.95);
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.more-icon {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+.more-icon.expanded {
+  transform: rotate(180deg);
+}
+
+.more-label {
+  display: none;
+}
+
+/* Expanded content */
+.expanded-content {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 12px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.expanded-content.show {
+  max-height: 400px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.all-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-image: url('/bg-pattern.png');
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  background-position: center;
+  padding: 16px;
+  border-radius: 20px;
+  border: 3px solid #FFD700;
+  box-shadow: 
+    inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2);
+  min-width: 200px;
+}
+
+/* Link with label style */
+.social-link.with-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 25px;
+  background: linear-gradient(145deg, #ffffff, #e8e8e8);
+  border: 2px solid #FFD700;
+  color: #333;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+    inset 0 2px 4px rgba(255, 255, 255, 0.6);
+  position: relative;
+}
+
+.social-link.with-label::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 40%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), transparent);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.social-link.with-label:active {
+  transform: scale(0.98);
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.link-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.link-label {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #333;
+  white-space: nowrap;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.social-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+.mkwtas-logo {
+  width: auto;
+  height: 20px;
+  max-width: 40px;
+  object-fit: contain;
+}
+
+/* Animation for the footer appearing */
+@keyframes slideUp {
+  from {
+    transform: translateX(-50%) translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Tablet breakpoint - show more button with label */
+@media (min-width: 481px) and (max-width: 768px) {
+  .more-button {
+    width: auto;
+    padding: 0 16px;
+    border-radius: 25px;
+  }
+  
+  .more-label {
+    display: inline;
+    margin-left: 4px;
+  }
+  
+  .primary-links {
+    gap: 14px;
+    padding: 10px 20px;
+  }
+  
+  .social-link.icon-only {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* Desktop breakpoint - show all links with labels */
+@media (min-width: 769px) {
+  .primary-links,
+  .expanded-content {
+    display: none !important;
+  }
+  
+  .desktop-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    background-image: url('/bg-pattern.png');
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+    background-position: center;
+    padding: 12px 32px;
+    border-radius: 50px;
+    border: 3px solid #FFD700;
+    box-shadow: 
+      0 6px 12px rgba(0, 0, 0, 0.4),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+      inset 0 2px 4px rgba(255, 255, 255, 0.2);
+  }
+  
+  .desktop-links .social-link {
+    display: flex;
+    align-items: center;
+    padding: 10px 18px;
+    border-radius: 25px;
+    background: linear-gradient(145deg, #ffffff, #e8e8e8);
+    border: 2px solid #FFD700;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+      0 4px 8px rgba(0, 0, 0, 0.3),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+      inset 0 2px 4px rgba(255, 255, 255, 0.6);
+    position: relative;
+  }
+  
+  .desktop-links .social-link::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 40%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), transparent);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  
+  .desktop-links .social-link:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 
+      0 8px 16px rgba(255, 215, 0, 0.5),
+      0 0 20px rgba(255, 215, 0, 0.3),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+      inset 0 2px 4px rgba(255, 255, 255, 0.6);
+    border-color: #FFA500;
+    background: linear-gradient(145deg, #ffffff, #ffd700);
+  }
+  
+  .desktop-links .social-link:active {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 
+      0 4px 8px rgba(255, 215, 0, 0.5),
+      inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Large desktop */
+@media (min-width: 1200px) {
+  .desktop-links {
+    gap: 24px;
+    padding: 14px 36px;
+  }
+  
+  .desktop-links .social-link {
+    padding: 12px 20px;
+  }
+  
+  .social-icon {
+    width: 26px;
+    height: 26px;
+  }
+  
+  .link-label {
+    font-size: 15px;
+  }
+}
